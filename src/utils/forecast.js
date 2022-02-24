@@ -8,14 +8,18 @@ const forecast = (latitude, longitude, callback) => {
 
     request({ url: url, json: true }, (error, {body}) => {
         if (error) {
-            callback('Unable to connect to weather services!', undefined)
+            callback('Unable to connect to weather services!', undefined, undefined)
         } else if (body.error) {
-            callback('Unable to find location. Try another search.', undefined)
+            callback('Unable to find location. Try another search.', undefined, undefined)
         } else {
-            const data = body.current.weather_descriptions[0] 
+            const data = 'Hi guys! Local time now in your city is ' + body.location.localtime 
+                + '. The weather today is "' + body.current.weather_descriptions[0] + '"'
                 + '. It is currently ' + body.current.temperature + ' degrees' 
-                + '. It feels like ' + body.current.feelslike + ' degrees out.' + body.location.timezone_id
-            callback(undefined, data)
+                + ', but it feels like ' + body.current.feelslike + ' degrees right :D'
+                + ' The humidity is ' + body.current.humidity + '% with UV index is ' + body.current.uv_index
+                + '. Thank you!'
+            const weatherForecastImg = body.current.weather_icons
+            callback(undefined, data, weatherForecastImg)
         }
     })
 }

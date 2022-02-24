@@ -36,7 +36,7 @@ app.get('/about', (req, res) => {
 
 app.get('/help', (req, res) => {
     res.render('help', {
-        helpText: 'This is some helpful text',
+        helpText: 'Just type a city name and you will see its weather forecast. Have fun!!!',
         title: 'Help',
         name: 'Quang Nhat'
     })
@@ -54,7 +54,7 @@ app.get('/weather', (req, res) => {
             return res.send({ error })
         }
 
-        forecast(longitude, latitude, (error, forecastData) => {
+        forecast(latitude, longitude, (error, forecastData, weatherForecastImg) => {
             if (error) {
                 return res.send({ error })
             }
@@ -62,7 +62,7 @@ app.get('/weather', (req, res) => {
             res.send({
                 forecast: forecastData,
                 location,
-                address: req.query.address
+                weatherForecastImg
             })
         })
     })
